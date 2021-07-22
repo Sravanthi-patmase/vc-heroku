@@ -319,11 +319,11 @@ navigator.mediaDevices.getUserMedia({
   }).catch(function(err) {
   console.log(err.name + ": " + err.message);
 });
-socket.on("roomfull", (room) => {
-      console.log('%%%%%')
-      console.log('This room is full');
-      alert('You cant join this room as it is full')
-});
+// socket.on("roomfull", (room) => {
+//       console.log('%%%%%')
+//       console.log('This room is full');
+//       alert('You cant join this room as it is full')
+// });
 
 const connectToNewUser = (userId, stream) => {
     console.log(userId, stream,'UUU')

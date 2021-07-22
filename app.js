@@ -30,16 +30,16 @@ io.on("connection", (socket) => {
 
     var total = io.engine.clientsCount;
     console.log(total,'NoOfClinets');
-    if(total < 3){
+    // if(total < 3){
       socket.join(roomId);
       socket.to(roomId).emit("userConnected", userId);//broadcast all the users in room including sender
       socket.on("message", (message) => {
         io.to(roomId).emit("createMessage", message, userName);
       });
-    }else{
-      console.log('GGGG',roomId)
-      socket.emit('roomfull',roomId);
-    }
+    // }else{
+    //   console.log('GGGG',roomId)
+    //   socket.emit('roomfull',roomId);
+    // }
 
     // Communicate the disconnection
     socket.on('disconnect', () => {
