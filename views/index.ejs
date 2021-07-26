@@ -265,19 +265,19 @@ const backBtn = document.querySelector(".header__back");
 let username = document.querySelector('.username');
 myVideo.muted = true;
 
-// backBtn.addEventListener("click", () => {
-//   document.querySelector(".main__left").style.display = "flex";
-//   document.querySelector(".main__left").style.flex = "1";
-//   document.querySelector(".main__right").style.display = "none";
-//   document.querySelector(".header__back").style.display = "none";
-// });
+backBtn.addEventListener("click", () => {
+  document.querySelector(".main__left").style.display = "flex";
+  document.querySelector(".main__left").style.flex = "1";
+  document.querySelector(".main__right").style.display = "none";
+  document.querySelector(".header__back").style.display = "none";
+});
 
-// showChat.addEventListener("click", () => {
-//   document.querySelector(".main__right").style.display = "flex";
-//   document.querySelector(".main__right").style.flex = "1";
-//   document.querySelector(".main__left").style.display = "none";
-//   document.querySelector(".header__back").style.display = "block";
-// });
+showChat.addEventListener("click", () => {
+  document.querySelector(".main__right").style.display = "flex";
+  document.querySelector(".main__right").style.flex = "1";
+  document.querySelector(".main__left").style.display = "none";
+  document.querySelector(".header__back").style.display = "block";
+});
 
 var user = prompt("Enter your name");
 if(user != null){
@@ -299,10 +299,10 @@ navigator.mediaDevices.getUserMedia({
     video: true,
   })
   .then((stream) => {
-    console.log(stream,'stream');
     myVideoStream = stream;
     addVideoStream(myVideo, stream);
     peer.on("call", (call) => {//Answer the call, providing our mediaStream
+      console.log(call,'call peer');
         call.answer(stream);//call answer() to  create a answer...
         const video = document.createElement("video");//show connected client...
         call.on("stream", (userVideoStream) => {//the browser is also updated for the person answering the call
@@ -314,7 +314,7 @@ navigator.mediaDevices.getUserMedia({
     });
     socket.on("userConnected", (userId) => {
         var conn = peer.connect(userId);
-        connectToNewUser(userId, stream);
+        setTimeout(connectToNewUser,1000,userId,stream)
     });
   }).catch(function(err) {
   console.log(err.name + ": " + err.message);
@@ -326,7 +326,7 @@ navigator.mediaDevices.getUserMedia({
 // });
 
 const connectToNewUser = (userId, stream) => {
-    console.log(userId, stream,'UUU')
+    // console.log(userId, stream,'UUU')
     const call = peer.call(userId, stream);// Call a peer, providing our mediaStream
     const video = document.createElement("video");
     call.on("stream", (userVideoStream) => {
@@ -338,14 +338,11 @@ const connectToNewUser = (userId, stream) => {
 };
 
 const addVideoStream = (video, stream) => {
-    console.log(stream,'GGGGGG')
     video.srcObject = stream;
     video.addEventListener("loadedmetadata", () => {
         video.play();
         videoGrid.append(video);
         console.log(user)
-        // username.innerHTML = 
-        // `<div class="username"><b><span> ${user}</span></b></div>`;
     });
 };
 
